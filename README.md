@@ -1,4 +1,4 @@
-# individuali
+
 # Paralelinė matricų daugyba naudojant MPI
 
 ## 1. Problema
