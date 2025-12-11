@@ -2,9 +2,9 @@
 # Paralelinė matricų daugyba naudojant MPI
 
 ## 1. Problema
-Užduotis: efektyviai padauginti dvi dideles n×n sveikųjų skaičių matricas A ir B, naudojant mpi4py. Matricų daugyba yra O(N³) uždavinys, tai reiškia, kad ji reikalauja daug skaičiavimo resursų — todėl puikiai tinka parodyti paralelinį greitėjimą.
+Užduotis: efektyviai padauginti dvi dideles n×n sveikųjų skaičių matricas A ir B, naudojant mpi4py. Matricų daugyba yra O(N³) uždavinys, tai reiškia, kad ji reikalauja daug skaičiavimo resursų — todėl puikiai tinka paraleliniam apdorojimui.
 
-Sprendimas: rangas 0 sugeneruoja matricas, padalina A eilutėmis tarp rangų, kiekvienas rangas padaugina savo eilutes su visų B matricos eilučių ir gražina rezultato dalį atgal.
+Sprendimas: pagrindinis procesas (rank 0) sugeneruoja matricas, padalija A eilutėmis tarp procesų. Kiekvienas procesas padaugina savo eilutes su visa B matrica ir grąžina rezultatą pagrindiniam procesui.
 
 
 ## 2. Duomenys
@@ -15,21 +15,17 @@ Programa generuoja dvi atsitiktines n x n matricas (panaudota funkcija "np.rando
 
 Kiekvienas procesas gauna savo rangą ir bendrą procesų skaičių.
 ### Pagrindinis procesas (rank 0):
-Nustato n reikšmę.
+Nustato matricos dydį n = 1000.
 
 Naudodamas funkciją generuoti(n) sukuria pradinius duomenis: dvi matricas A ir B.
 
-Padalija matricos A eilutes tarp likusių procesų:
+Išskirsto A matricos eilutes tarp procesų naudodamas "comm.scatter";
 
-Apskaičiuojamas kiekvienam procesui priskirtas eilučių kiekis.
+Siunčia visiems procesams visą B matricą naudojant "comm.Bcast";
 
-Naudojami comm.send kvietimai matricai A daliai ir visai matricai B siųsti kiekvienam procesui atskirai.
+Surenka visų procesų rezultatus (C_dalis) naudodamas "comm.gather" ir sujungia į galutinę matricą C;
 
-Surenka rezultatus comm.recv kvietimais ir sujungia juos į galutinę matricą C:
-
-Kiekvienas procesas grąžina savo skaičiavimo dalį ir darbo laiką.
-
-Apskaičiuoja maksimalų darbo laiką.
+Surenka darbo laikus iš visų procesų ir apskaičiuoja maksimalų darbo laiką.
 
 ### Pagalbiniai procesai (rank > 0)
 Priima savo dalį matricos A ir visą matricą B.
@@ -37,11 +33,6 @@ Priima savo dalį matricos A ir visą matricą B.
 Atlieka paskirtą skaičiavimą (C_dalis = np.dot(A_dalis, B)).
 
 Išsiunčia rezultatą ir savo darbo laiką atgal pagrindiniam procesui.
-
-### MPI aplinkos uždarymas
-Rank 0 išveda rezultatus ir baigia programą.
-
-MPI aplinka uždaroma automatiškai programos pabaigoje.
 
 
 ## 4. Paleidimo instrukcijos
@@ -57,16 +48,13 @@ Reikalavimai:
 Paleidimas:
 Paleidimas su X procesais (pvz., 4 procesai):
 mpirun -n 4 python individuali.py
-Vartotojas įveda matricos dydį n .
-Jei Enter paspaudžiamas be įvesties, naudojamas numatytasis n = 10.
 
 
 ## Rezultatų teisingumas ir scaling analizė
 
 ### Rezultatų teisingumas
-- Kiekvieno proceso gauta dalis matricų daugybos (`C_dalis`) yra sujungiama pagrindiniame procese (`rank 0`) į galutinę rezultatų matricą `C`.  
-- Rezultatai patikrinami lyginant su tiesioginiu skaičiavimu viename procese (`np.dot(A, B)`).  
-- Jei visos dalys sutampa su vieno proceso rezultatu, laikoma, kad skaičiavimas teisingas.
+- Kiekvieno proceso gauta dalis matricų daugybos (`C_dalis`) yra sujungiama pagrindiniame procese (`rank 0`) į galutinę rezultatų matricą `C`.   
+- Skaičiavimai laikomi teisingais, nes naudojant skirtinga procesu skaičių rezultatas gaunamas  vienodas.
 
 ### Scaling analizė
 - Skaičiavimo laikas priklauso nuo procesų skaičiaus (`X`).  
