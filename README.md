@@ -43,14 +43,14 @@ Reikalavimai:
 Įdiegimas:
 Įdiekite mpi4py (jei dar neįdiegta):
 - pip install mpi4py numpy
-Įsitikinkite, kad turite MPI įrankį:
-- mpirun --version
 Paleidimas:
+Galima paleisti rankiniu būdu:
 Paleidimas su X procesais (pvz., 4 procesai):
-mpirun -n 4 python individuali.py
+mpirun -n 4 python ind.py
+Galima paleisti naudojant reprodukcijos skriptą:
+./run.sh
 
-
-## Rezultatų teisingumas ir scaling analizė
+## 5. Rezultatų teisingumas ir scaling analizė
 
 ### Rezultatų teisingumas
 - Kiekvieno proceso gauta dalis matricų daugybos (`C_dalis`) yra sujungiama pagrindiniame procese (`rank 0`) į galutinę rezultatų matricą `C`.   
@@ -59,7 +59,7 @@ mpirun -n 4 python individuali.py
 ### Scaling analizė
 - Skaičiavimo laikas priklauso nuo procesų skaičiaus (`X`).  
 - Lentelėje ar grafike pateikiami šie duomenys:
-## Scaling analizė
+
 
 
 | Procesų skaičius (X) | Maksimalus laikas (s) | Speedup Sₓ = T₁/Tₓ | Efektyvumas Eₓ = Sₓ/X |
