@@ -54,7 +54,7 @@ mpirun -n 4 python individuali.py
 
 ### Rezultatų teisingumas
 - Kiekvieno proceso gauta dalis matricų daugybos (`C_dalis`) yra sujungiama pagrindiniame procese (`rank 0`) į galutinę rezultatų matricą `C`.   
-- Skaičiavimai laikomi teisingais, nes naudojant skirtinga procesu skaičių rezultatas gaunamas  vienodas.
+- Skaičiavimai laikomi teisingais, nes naudojant skirtingą procesų skaičių rezultatas gaunamas identiškas.
 
 ### Scaling analizė
 - Skaičiavimo laikas priklauso nuo procesų skaičiaus (`X`).  
@@ -62,10 +62,10 @@ mpirun -n 4 python individuali.py
 
 | Procesų skaičius (X) | Bendras laikas (TX, s) | Speedup (SX) | Efficiency (EX) |
 |---------------------|------------------------|--------------|----------------|
-| 1                   | TX0                     | 1.0          | 1.0            |
-| 2                   | TX2                     | TX0/TX2      | SX/2           |
-| 4                   | TX4                     | TX0/TX4      | SX/4           |
-| 8                   | TX8                     | TX0/TX8      | SX/8           |
+| 2                   | 0,544                     | 1,0          | 1.0            |
+| 4                   | 0,4                       | 1,36      | SX/2           |
+| 6                   | 0,297                     | 1,83      | SX/4           |
+| 8                   | 0,227                     | 2,4      | SX/8           |
 
 - **TX** – bendras programos skaičiavimo laikas su X procesų  
 - **SX** – greičio prieaugis (speedup), apskaičiuojamas kaip `TX0 / TXX`  
