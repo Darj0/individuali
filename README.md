@@ -59,13 +59,16 @@ mpirun -n 4 python individuali.py
 ### Scaling analizė
 - Skaičiavimo laikas priklauso nuo procesų skaičiaus (`X`).  
 - Lentelėje ar grafike pateikiami šie duomenys:
+## Scaling analizė
 
-| Procesų skaičius (X) | Bendras laikas (TX, s) | Speedup (SX) | Efficiency (EX) |
-|---------------------|------------------------|--------------|----------------|
-| 2                   | 0,544                     | 1,0          | 1.0            |
-| 4                   | 0,4                       | 1,36      | SX/2           |
-| 6                   | 0,297                     | 1,83      | SX/4           |
-| 8                   | 0,227                     | 2,4      | SX/8           |
+
+| Procesų skaičius (X) | Maksimalus laikas (s) | Speedup Sₓ = T₁/Tₓ | Efektyvumas Eₓ = Sₓ/X |
+|---------------------|----------------------|---------------------|-----------------------|
+| 1                   | 0.934892             | 1.00                | 1.00                  |
+| 2                   | 0.532344             | 1.76                | 0.88                  |
+| 4                   | 0.277094             | 3.37                | 0.84                  |
+| 6                   | 0.244560             | 3.82                | 0.64                  |
+| 8                   | 0.200840             | 4.65                | 0.58                  |
 
 - **TX** – bendras programos skaičiavimo laikas su X procesų  
 - **SX** – greičio prieaugis (speedup), apskaičiuojamas kaip `TX0 / TXX`  
