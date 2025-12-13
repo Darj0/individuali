@@ -62,6 +62,7 @@ Paleidimas naudojant reprodukcijos skriptą (paleidžia programą su 1, 2, 4, 6,
 Įsitikinkite, kad skriptas turi vykdymo teises:
 
 - chmod +x run.sh
+  
 Pateiktą paleidimo skriptą run.sh galima paleisti taip:
 
 - ./run.sh
