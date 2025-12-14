@@ -27,8 +27,7 @@ comm.bcast(n, root=0);
 "comm.scatter(blokai, root=0)";
 - Surenka iš visų procesų apskaičiuotas dalines rezultato matricos C dalis naudodamas
 "comm.gather(C_dalis, root=0)";
-- Surenka kiekvieno proceso darbo laiką naudodamas
-"comm.gather(darbo_laikas, root=0)" ir nustato maksimalų darbo laiką;
+- Gauna maksimalų darbo laiką su funkcija "comm.reduce(darbo_laikas, op=MPI.MAX, root=0)";
 - Sujungia gautas C dalis į vieną matricą naudodamas "np.vstack(C)";
 - Išveda: maksimalų darbo laiką, rezultato matricos C pradžią, rezultato matricos C pabaigą, procesų skaičių, kiek eilučių gavo kiekvienas procesas.
 
