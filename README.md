@@ -71,7 +71,7 @@ Pateiktą paleidimo skriptą run.sh galima paleisti taip:
 
 ### Rezultatų teisingumas
 - Kiekvieno proceso gauta dalis matricų daugybos yra sujungiama pagrindiniame procese į galutinę rezultatų matricą C.   
-- Skaičiavimai laikomi teisingais, nes naudojant skirtingą procesų skaičių rezultatas gaunamas identiškas (programa išveda matricos pradžią ir pabaigą).
+- Skaičiavimai laikomi teisingais, nes naudojant skirtingą procesų skaičių rezultatas gaunamas identiškas (programa išveda matricos pradžios ir pabaigos submatricas 5x5).
 
 ### Scaling analizė
 
