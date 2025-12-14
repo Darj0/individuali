@@ -11,7 +11,7 @@ def generuoti(n):
     B = np.random.randint(0, 10, size=(n, n))
     return A, B
 
-def darbas():
+def main():
     if rangas == 0:
         n = 1000
     else:
@@ -36,14 +36,15 @@ def darbas():
     t_pabaiga = MPI.Wtime()
     darbo_laikas = t_pabaiga - t_pradzia
 
-    C = comm.gather(C_dalis, root=0)
-    laikai = comm.gather(darbo_laikas, root=0)
+    max_laikas = comm.reduce(darbo_laikas, op=MPI.MAX, root=0)
 
+
+    C = comm.gather(C_dalis, root=0)
     eiluciu_sk = comm.gather(A_dalis.shape[0], root=0)
 
     if rangas == 0:
         C = np.vstack(C)
-        print(f"\n=== Maksimalus darbo laikas: {max(laikai):.6f} sek ===")
+        print(f"\n=== Maksimalus darbo laikas: {max_laikas:.6f} sek ===")
         print(f"C matricos pradzia:\n{C[:5, :5]}")
         print(f"C matricos pabaiga:\n{C[-5:, -5:]}")
         print(f"Procesu skaicius: {procesu_sk}\n")
@@ -51,5 +52,4 @@ def darbas():
             print(f"Procesas {p} gavo {e} eiluciu")
 
 if __name__ == "__main__":
-    darbas()
-
+    main()
